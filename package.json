@@ -1,0 +1,21 @@
+{
+  "name": "readability-service",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.4",
+    "@mozilla/readability": "github:mozilla/readability#e806508e9c1e2007bebe75bff47b53dcaca80903",
+    "hono": "^4.6.8",
+    "jsdom": "^25.0.1",
+    "postal-mime": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^20.11.17",
+    "tsx": "^4.7.1",
+    "typescript": "^5.6.3"
+  }
+}
