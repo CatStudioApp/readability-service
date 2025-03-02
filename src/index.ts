@@ -9,7 +9,7 @@ import {
 } from 'jsdom';
 import type { Email } from 'postal-mime';
 
-const DEFAULT_EMAIL_URL_START = 'https://inbox.infoflowmail.com';
+const DEFAULT_EMAIL_URL_START = 'https://inbox.demo.com';
 
 const parseReader = (reader: Readability): {
   title: string;
@@ -41,12 +41,12 @@ function readability(url: string, html: string) {
 }
 
 
-const buildUrl = (messageId?: string) => {
+const buildUrl = (baseUrl: string, messageId?: string) => {
   if (!messageId) {
     const randomUuid = crypto.randomUUID();
-    return `${DEFAULT_EMAIL_URL_START}/messages/${randomUuid}`;
+    return `${baseUrl}/messages/${randomUuid}`;
   }
-  return `${DEFAULT_EMAIL_URL_START}/inbox/${messageId}`;
+  return `${baseUrl}/inbox/${messageId}`;
 };
 
 const app = new Hono()
@@ -62,10 +62,19 @@ app.post('/api/v1/email/readability', async (c) => {
   // auth header is `Bearer <READABILITY_SERVICE_KEY>`
   const authHeader = c.req.header('Authorization');
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    console.error(`[Unauthorized]: ${authHeader} ${process.env.READABILITY_SERVICE_KEY}`);
     return c.json({error: 'Unauthorized'}, 401);
+  }
+
+  // X-Base-Url header
+  const baseUrl = c.req.header('X-Base-Url');
+  if (!baseUrl) {
+    console.error("🚀 ~ app.post ~ baseUrl:", baseUrl)
+    return c.json({error: 'X-Base-Url header is required'}, 400);
   }
   const readabilityServiceKey = authHeader.split(' ')[1];
   if (readabilityServiceKey !== process.env.READABILITY_SERVICE_KEY) {
+    console.error(`[Unauthorized]: ${authHeader} ${process.env.READABILITY_SERVICE_KEY}`);
     return c.json({error: 'Unauthorized'}, 401);
   }
   const mail = await c.req.json() as MailWithoutAttachments;
