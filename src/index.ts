@@ -12,16 +12,16 @@ import type { Email } from 'postal-mime';
 const DEFAULT_EMAIL_URL_START = 'https://inbox.demo.com';
 
 const parseReader = (reader: Readability): {
-  title: string;
-  content: string;
-  textContent: string;
-  length: number;
-  excerpt: string;
-  byline: string;
-  dir: string;
-  siteName: string;
-  lang: string;
-  publishedTime: string;
+  title?: string | null;
+  content?: string | null;
+  textContent?: string | null;
+  length?: number | null;
+  excerpt?: string | null;
+  byline?: string | null;
+  dir?: string | null;
+  siteName?: string | null;
+  lang?: string | null;
+  publishedTime?: string | null;
 } | null => {
   try {
     return reader.parse()
