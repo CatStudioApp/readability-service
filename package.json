@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.13.4",
-    "@mozilla/readability": "github:mozilla/readability#e806508e9c1e2007bebe75bff47b53dcaca80903",
+    "@mozilla/readability": "github:mozilla/readability#118f01538e167218bd86ffd493bd3466aec4870a",
     "hono": "^4.6.8",
     "jsdom": "^25.0.1",
     "postal-mime": "^2.3.2"
