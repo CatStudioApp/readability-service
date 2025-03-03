@@ -78,8 +78,9 @@ app.post('/api/v1/email/readability', async (c) => {
     return c.json({error: 'Unauthorized'}, 401);
   }
   const mail = await c.req.json() as MailWithoutAttachments;
-  const readabilityResult = readability(buildUrl(baseUrl, mail.messageId), mail.html ?? '');
-  console.log("🚀 ~ app.post ~ readabilityResult:", readabilityResult, mail)
+  const url = buildUrl(baseUrl, mail.messageId);
+  const readabilityResult = readability(url, mail.html ?? '');
+  console.log("🚀 ~ app.post ~ readabilityResult:", readabilityResult, mail, url)
   return c.json(readabilityResult);
 })
 
