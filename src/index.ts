@@ -79,6 +79,7 @@ app.post('/api/v1/email/readability', async (c) => {
   }
   const mail = await c.req.json() as MailWithoutAttachments;
   const readabilityResult = readability(buildUrl(baseUrl, mail.messageId), mail.html ?? '');
+  console.log("🚀 ~ app.post ~ readabilityResult:", readabilityResult, mail)
   return c.json(readabilityResult);
 })
 
