@@ -42,11 +42,8 @@ function readability(url: string, html: string) {
 
 
 const buildUrl = (baseUrl: string, messageId?: string) => {
-  if (!messageId) {
-    const randomUuid = crypto.randomUUID();
-    return `${baseUrl}/messages/${randomUuid}`;
-  }
-  return `${baseUrl}/inbox/${messageId}`;
+  const randomUuid = crypto.randomUUID();
+  return `${baseUrl}/messages/${randomUuid}`;
 };
 
 const app = new Hono()
